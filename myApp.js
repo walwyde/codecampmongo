@@ -36,23 +36,38 @@ const createAndSavePerson = (done) => {
     favoriteFoods: ["burrito", "pizza"],
   });
 
-  person.save((err, data) => {
-    if (err) {
+  person
+    .save()
+    .then((err, data) => {
+      if (err) {
+        console.log(err);
+        return done(err);
+      }
+      done(data);
+    })
+    .catch((err) => {
       console.log(err);
-      return done(err);
-    }
-    done(data);
-  });
+      done(err);
+    });
 };
 
-// createAndSavePerson((data) => {
-//   data.save((err, data) => {
-//     if (err) {
-//       console.log(err);
-//     }
-//     console.log(data);
-//   })
-// });
+createAndSavePerson(function (err, data) {
+  if (err) {
+    console.log(err);
+  }
+  console.log(!data);
+  if (!data) {
+    console.log("Missing `done()` argument");
+    return console.log({ message: "Missing callback argument" });
+  }
+  Person.findById(data._id, function (err, pers) {
+    if (err) {
+      console.log(err);
+    }
+    console.log(pers);
+    pers.remove();
+  });
+});
 
 const createManyPeople = (arrayOfPeople, done) => {
   done(null /*, data*/);
