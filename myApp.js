@@ -11,7 +11,23 @@ mongoose
   )
   .catch((err) => console.log(err));
 
+const personSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
+  age: {
+    type: Number,
+    min: 4,
+  },
+  favoriteFoods: [String],
+});
+
 let Person;
+
+const PersonModel = mongoose.model("Person", personSchema);
+
+Person = PersonModel;
 
 const createAndSavePerson = (done) => {
   done(null /*, data*/);
