@@ -46,7 +46,12 @@ const createAndSavePerson = (done) => {
 };
 
 // createAndSavePerson((data) => {
-//   console.log(data);
+//   data.save((err, data) => {
+//     if (err) {
+//       console.log(err);
+//     }
+//     console.log(data);
+//   })
 // });
 
 const createManyPeople = (arrayOfPeople, done) => {
@@ -102,9 +107,9 @@ const findAllPeople = (done) => {
   });
 };
 
-findAllPeople((data) => {
-  console.log(data);
-});
+// findAllPeople((data) => {
+//   console.log(data);
+// });
 
 const findAllPeopleAndDelete = (done) => {
   Person.find((err, data) => {
