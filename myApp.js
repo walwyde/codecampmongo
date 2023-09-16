@@ -30,8 +30,24 @@ const PersonModel = mongoose.model("Person", personSchema);
 Person = PersonModel;
 
 const createAndSavePerson = (done) => {
-  done(null /*, data*/);
+  const person = new Person({
+    name: "Mary",
+    age: 20,
+    favoriteFoods: ["burrito", "pizza"],
+  });
+
+  person.save((err, data) => {
+    if (err) {
+      console.log(err);
+      return done(err);
+    }
+    done(data);
+  });
 };
+
+// createAndSavePerson((data) => {
+//   console.log(data);
+// });
 
 const createManyPeople = (arrayOfPeople, done) => {
   done(null /*, data*/);
@@ -76,6 +92,40 @@ const queryChain = (done) => {
 
   done(null /*, data*/);
 };
+
+const findAllPeople = (done) => {
+  Person.find((err, data) => {
+    if (err) {
+      console.log(err);
+    }
+    done(data);
+  });
+};
+
+findAllPeople((data) => {
+  console.log(data);
+});
+
+const findAllPeopleAndDelete = (done) => {
+  Person.find((err, data) => {
+    if (err) {
+      return done(err);
+    }
+    data.forEach((person) => {
+      Person.remove((err, data) => {
+        if (err) {
+          return done(err);
+        }
+        done(data);
+        console.log(`deleted ${person.name}`);
+      });
+    });
+  });
+};
+
+// findAllPeopleAndDelete((data) => {
+//   console.log(data);
+// });
 
 /** **Well Done !!**
 /* You completed these challenges, let's go celebrate !
