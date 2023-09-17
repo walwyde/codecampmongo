@@ -18,7 +18,7 @@ const personSchema = new mongoose.Schema({
   },
   age: {
     type: Number,
-    min: 4,
+    min: 0,
   },
   favoriteFoods: [String],
 });
