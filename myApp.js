@@ -97,7 +97,13 @@ findOneByFood("burrito", (err, data) => {
 });
 
 const findPersonById = (personId, done) => {
-  done(null /*, data*/);
+  Person.findById(personId, (err, data) => {
+    if (err) {
+      console.log(err);
+      return done(err, null);
+    }
+    done(null, data);
+  });
 };
 
 const findEditThenSave = (personId, done) => {
@@ -112,15 +118,7 @@ const findAndUpdate = (personName, done) => {
   done(null /*, data*/);
 };
 
-const removeById = (personId, done) => {
-  Person.findById(personId, (err, data) => {
-    if (err) {
-      console.log(err);
-      return done(err, null);
-    }
-    done(null, data);
-  });
-};
+const removeById = (personId, done) => {};
 
 const removeManyPeople = (done) => {
   const nameToRemove = "Mary";
