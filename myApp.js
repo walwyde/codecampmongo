@@ -29,6 +29,19 @@ const PersonModel = mongoose.model("Person", personSchema);
 
 Person = PersonModel;
 
+const arrayOfPeople = [
+  {
+    name: "Mary",
+    age: 20,
+    favoriteFoods: ["burrito", "pizza"],
+  },
+  {
+    name: "John",
+    age: 21,
+    favoriteFoods: ["burrito", "pizza"],
+  },
+];
+
 const createAndSavePerson = (done) => {
   const person = new Person({
     name: "Mary",
@@ -45,26 +58,22 @@ const createAndSavePerson = (done) => {
   });
 };
 
-createAndSavePerson(function (err, data) {
+const createManyPeople = (arrayOfPeople, done) => {
+  Person.create(arrayOfPeople, (err, data) => {
+    if (err) {
+      console.log(err);
+      return done(err, null);
+    }
+    done(null, data);
+  });
+};
+
+createManyPeople(arrayOfPeople, (err, data) => {
   if (err) {
     console.log(err);
   }
-  if (!data) {
-    console.log("Missing `done()` argument");
-    return console.log({ message: "Missing callback argument" });
-  }
-  Person.findById(data._id, function (err, pers) {
-    if (err) {
-      console.log(err);
-    }
-    console.log(pers);
-    pers.remove();
-  });
-});
-
-const createManyPeople = (arrayOfPeople, done) => {
-  done(null /*, data*/);
-};
+  console.log(data);
+})
 
 const findPeopleByName = (personName, done) => {
   done(null /*, data*/);
@@ -135,6 +144,23 @@ const findAllPeopleAndDelete = (done) => {
     });
   });
 };
+
+// createAndSavePerson(function (err, data) {
+//   if (err) {
+//     console.log(err);
+//   }
+//   if (!data) {
+//     console.log("Missing `done()` argument");
+//     return console.log({ message: "Missing callback argument" });
+//   }
+//   Person.findById(data._id, function (err, pers) {
+//     if (err) {
+//       console.log(err);
+//     }
+//     console.log(pers);
+//     pers.remove();
+//   });
+// });
 
 // findAllPeopleAndDelete((data) => {
 //   console.log(data);
