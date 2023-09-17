@@ -69,7 +69,7 @@ const createManyPeople = (arrayOfPeople, done) => {
 };
 
 const findPeopleByName = (personName, done) => {
-  Person.find({name: personName}, (err, data) => {
+  Person.find({ name: personName }, (err, data) => {
     if (err) {
       console.log(err);
       return done(err, null);
@@ -79,8 +79,22 @@ const findPeopleByName = (personName, done) => {
 };
 
 const findOneByFood = (food, done) => {
-  done(null /*, data*/);
+  Person.findOne({ favoriteFoods: { $in: [food] } }, (err, data) => {
+    if (err) {
+      console.log(err);
+      return done(err, null);
+    }
+    done(null, data);
+  });
 };
+
+findOneByFood("burrito", (err, data) => {
+  if (err) {
+    console.log(err);
+    return;
+  }
+  console.log(data);
+});
 
 const findPersonById = (personId, done) => {
   done(null /*, data*/);
@@ -122,8 +136,6 @@ const findAllPeople = (done) => {
     done(data);
   });
 };
-
-
 
 const findAllPeopleAndDelete = (done) => {
   Person.find((err, data) => {
