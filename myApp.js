@@ -68,15 +68,14 @@ const createManyPeople = (arrayOfPeople, done) => {
   });
 };
 
-createManyPeople(arrayOfPeople, (err, data) => {
-  if (err) {
-    console.log(err);
-  }
-  console.log(data);
-})
-
 const findPeopleByName = (personName, done) => {
-  done(null /*, data*/);
+  Person.find({name: personName}, (err, data) => {
+    if (err) {
+      console.log(err);
+      return done(err, null);
+    }
+    done(null, data);
+  });
 };
 
 const findOneByFood = (food, done) => {
@@ -124,9 +123,7 @@ const findAllPeople = (done) => {
   });
 };
 
-// findAllPeople((data) => {
-//   console.log(data);
-// });
+
 
 const findAllPeopleAndDelete = (done) => {
   Person.find((err, data) => {
@@ -144,6 +141,24 @@ const findAllPeopleAndDelete = (done) => {
     });
   });
 };
+
+// findAllPeople((data) => {
+//   console.log(data);
+// });
+
+// findPeopleByName("Mary", (err, data) => {
+//   if (err) {
+//     console.log(err);
+//   }
+//   console.log(data);
+// })
+
+// createManyPeople(arrayOfPeople, (err, data) => {
+//   if (err) {
+//     console.log(err);
+//   }
+//   console.log(data);
+// })
 
 // createAndSavePerson(function (err, data) {
 //   if (err) {
