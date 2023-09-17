@@ -88,14 +88,6 @@ const findOneByFood = (food, done) => {
   });
 };
 
-findOneByFood("burrito", (err, data) => {
-  if (err) {
-    console.log(err);
-    return;
-  }
-  console.log(data);
-});
-
 const findPersonById = (personId, done) => {
   Person.findById(personId, (err, data) => {
     if (err) {
@@ -109,8 +101,25 @@ const findPersonById = (personId, done) => {
 const findEditThenSave = (personId, done) => {
   const foodToAdd = "hamburger";
 
-  done(null /*, data*/);
+  Person.findById(personId, (err, data) => {
+    if (err) {
+      console.log(err);
+      return done(err, null);
+    }
+    data.favoriteFoods.push(foodToAdd);
+
+    data.markModified("favoriteFoods");
+
+    data.save((err, data) => {
+      if (err) {
+        console.log(err);
+        return done(err, null);
+      }
+      done(null, data);
+    });
+  });
 };
+
 
 const findAndUpdate = (personName, done) => {
   const ageToSet = 20;
@@ -157,6 +166,20 @@ const findAllPeopleAndDelete = (done) => {
     });
   });
 };
+
+// findOneByFood("burrito", (err, data) => {
+//   if (err) {
+//     console.log(err);
+//     return;
+//   }
+//   findEditThenSave(data._id, (err, data) => {
+//     if (err) {
+//       console.log(err);
+//       return;
+//     }       
+//     console.log(data);
+//   })
+// });
 
 // findAllPeople((data) => {
 //   console.log(data);
