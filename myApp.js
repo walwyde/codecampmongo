@@ -1,4 +1,5 @@
 require("dotenv").config();
+const { query } = require("express");
 const mongoose = require("mongoose");
 
 mongoose
@@ -37,6 +38,21 @@ const arrayOfPeople = [
   },
   {
     name: "John",
+    age: 21,
+    favoriteFoods: ["burrito", "pizza"],
+  },
+  {
+    name: "Joe",
+    age: 21,
+    favoriteFoods: ["burrito", "pizza"],
+  },
+  {
+    name: "Jude",
+    age: 21,
+    favoriteFoods: ["burrito", "pizza"],
+  },
+  {
+    name: "joey",
     age: 21,
     favoriteFoods: ["burrito", "pizza"],
   },
@@ -159,12 +175,20 @@ const removeManyPeople = (done) => {
   });
 };
 
-
-
 const queryChain = (done) => {
   const foodToSearch = "burrito";
 
-  done(null /*, data*/);
+  Person.find({ favoriteFoods: { $in: [foodToSearch] } })
+    .sort({ name: 1 })
+    .limit(2)
+    .select("-age")
+    .exec((err, data) => {
+      if (err) {
+        console.log(err);
+        return done(err, null);
+      }
+      done(null, data);
+    });
 };
 
 const findAllPeople = (done) => {
@@ -193,6 +217,13 @@ const findAllPeopleAndDelete = (done) => {
     });
   });
 };
+
+// queryChain((err, data) => {
+//   if (err) {
+//     return console.log(err);
+//   }
+//   console.log(data);
+// });
 
 // removeManyPeople((err, data) => {
 //   console.log(data);
