@@ -107,6 +107,7 @@ const findEditThenSave = (personId, done) => {
       return done(err, null);
     }
     data.favoriteFoods.push(foodToAdd);
+    // data.favoriteFoods = [];
 
     data.markModified("favoriteFoods");
 
@@ -119,7 +120,6 @@ const findEditThenSave = (personId, done) => {
     });
   });
 };
-
 
 const findAndUpdate = (personName, done) => {
   const ageToSet = 20;
@@ -145,8 +145,9 @@ const findAllPeople = (done) => {
   Person.find((err, data) => {
     if (err) {
       console.log(err);
+      return done(err, null);
     }
-    done(data);
+    done(null, data);
   });
 };
 
@@ -172,13 +173,16 @@ const findAllPeopleAndDelete = (done) => {
 //     console.log(err);
 //     return;
 //   }
-//   findEditThenSave(data._id, (err, data) => {
+//   findEditThenSave(data._id, function (err, data) {
 //     if (err) {
-//       console.log(err);
-//       return;
-//     }       
+//       return next(err);
+//     }
+//     if (!data) {
+//       console.log("Missing `done()` argument");
+//       return next({ message: "Missing callback argument" });
+//     }
 //     console.log(data);
-//   })
+//   });
 // });
 
 // findAllPeople((data) => {

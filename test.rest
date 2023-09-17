@@ -1,0 +1,19 @@
+POST http://localhost:3000/_api/find-edit-save HTTP/1.1
+content-type : application/json
+
+{
+    "name": "Waals",
+    "age": 30
+}
+
+###
+GET http://localhost:3000/_api/find-by-id HTTP/1.1
+
+###
+POST http://localhost:3000/_api/mongoose-model HTTP/1.1
+Content-Type: application/json;
+
+{
+    "name": "Waals",
+    "age": 35
+}
