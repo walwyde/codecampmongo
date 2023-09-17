@@ -36,26 +36,19 @@ const createAndSavePerson = (done) => {
     favoriteFoods: ["burrito", "pizza"],
   });
 
-  person
-    .save()
-    .then((err, data) => {
-      if (err) {
-        console.log(err);
-        return done(err);
-      }
-      done(data);
-    })
-    .catch((err) => {
+  person.save((err, data) => {
+    if (err) {
       console.log(err);
-      done(err);
-    });
+      return done(err, null);
+    }
+    done(null, data);
+  });
 };
 
 createAndSavePerson(function (err, data) {
   if (err) {
     console.log(err);
   }
-  console.log(!data);
   if (!data) {
     console.log("Missing `done()` argument");
     return console.log({ message: "Missing callback argument" });
